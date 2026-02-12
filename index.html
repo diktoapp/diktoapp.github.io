@@ -1,291 +1,506 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dikto — Voice-to-Text for macOS</title>
-  <meta name="description" content="Records speech, transcribes locally. Whisper + Parakeet. No cloud. Private by design.">
-  <style>
-    :root {
-      --bg: #0d1117;
-      --surface: #161b22;
-      --border: #30363d;
-      --text: #e6edf3;
-      --muted: #8b949e;
-      --accent: #58a6ff;
-      --green: #3fb950;
-      --purple: #bc8cff;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
-
-    /* Hero */
-    .hero {
-      text-align: center;
-      padding: 80px 0 48px;
-    }
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-    }
-    .hero .tagline {
-      font-size: 1.25rem;
-      color: var(--muted);
-      max-width: 480px;
-      margin: 0 auto 12px;
-    }
-    .hero .badges {
-      margin-top: 20px;
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .badge {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--muted);
-    }
-
-    /* Install */
-    .install {
-      padding: 48px 0;
-    }
-    .install h2 {
-      font-size: 1.5rem;
-      margin-bottom: 24px;
-      text-align: center;
-    }
-    .install-options {
-      display: grid;
-      gap: 16px;
-    }
-    .install-option {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px 24px;
-    }
-    .install-option h3 {
-      font-size: 1rem;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .install-option .label {
-      font-size: 0.7rem;
-      padding: 2px 8px;
-      border-radius: 10px;
-      background: var(--accent);
-      color: var(--bg);
-      font-weight: 600;
-    }
-    .install-option p {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 12px;
-    }
-    pre {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 14px 16px;
-      overflow-x: auto;
-      font-size: 0.85rem;
-      line-height: 1.5;
-    }
-    code {
-      font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, monospace;
-      color: var(--green);
-    }
-
-    /* Features */
-    .features {
-      padding: 48px 0;
-    }
-    .features h2 {
-      font-size: 1.5rem;
-      margin-bottom: 24px;
-      text-align: center;
-    }
-    .feature-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .feature {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-    }
-    .feature h3 {
-      font-size: 0.95rem;
-      margin-bottom: 6px;
-    }
-    .feature p {
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-
-    /* Privacy */
-    .privacy {
-      padding: 48px 0;
-      text-align: center;
-    }
-    .privacy h2 { font-size: 1.5rem; margin-bottom: 12px; }
-    .privacy p {
-      color: var(--muted);
-      max-width: 520px;
-      margin: 0 auto;
-      font-size: 1rem;
-    }
-
-    /* Gatekeeper */
-    .gatekeeper {
-      padding: 32px 0 48px;
-    }
-    details {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px 24px;
-    }
-    summary {
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 1rem;
-    }
-    details[open] summary { margin-bottom: 16px; }
-    details ol {
-      padding-left: 20px;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-    details ol li { margin-bottom: 10px; }
-    details ol li strong { color: var(--text); }
-
-    /* Footer */
-    .footer {
-      padding: 32px 0;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-    .footer a { color: var(--accent); }
-
-    @media (max-width: 600px) {
-      .hero h1 { font-size: 2rem; }
-      .feature-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dikto | Privacy-first Dictation for macOS</title>
+<meta name="description" content="Privacy-first, offline voice-to-text for macOS. Powered by Whisper &amp; Parakeet. No cloud, no latency, no subscriptions."/>
+<meta property="og:title" content="Dikto | Privacy-first Dictation for macOS"/>
+<meta property="og:description" content="Lightning-fast, offline on-device transcription for macOS. Powered by Whisper &amp; Parakeet. No cloud, no latency, no subscriptions."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://diktoapp.github.io"/>
+<meta property="og:image" content="https://diktoapp.github.io/og-image.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Dikto | Privacy-first Dictation for macOS"/>
+<meta name="twitter:description" content="Lightning-fast, offline on-device transcription for macOS. Powered by Whisper & Parakeet. No cloud, no latency, no subscriptions."/>
+<meta name="twitter:image" content="https://diktoapp.github.io/og-image.png"/>
+<link rel="canonical" href="https://diktoapp.github.io"/>
+<link rel="icon" type="image/png" href="dikto-icon.png"/>
+<link rel="apple-touch-icon" href="dikto-icon.png"/>
+<meta name="theme-color" content="#101822"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Dikto",
+  "description": "Privacy-first, offline voice-to-text dictation app for macOS. Powered by OpenAI Whisper and NVIDIA Parakeet. Works system-wide in any text field — code editors, email, notes, browsers, and more. No cloud, no latency, no subscriptions.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "macOS 14.0+",
+  "url": "https://diktoapp.github.io",
+  "downloadUrl": "https://github.com/diktoapp/dikto/releases/latest",
+  "softwareVersion": "1.2.1",
+  "license": "https://opensource.org/licenses/MIT",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "Dikto",
+    "url": "https://github.com/diktoapp"
+  },
+  "keywords": "dictation, voice to text, speech to text, macOS, offline, privacy, whisper, parakeet, transcription, open source"
+}
+</script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#1162d4",
+                "background-light": "#f6f7f8",
+                "background-dark": "#101822",
+              },
+              fontFamily: {
+                "display": ["Space Grotesk"],
+                "mono": ["SF Mono", "Fira Code", "Fira Mono", "Menlo", "monospace"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .glass {
+            background: rgba(16, 24, 34, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at top center, rgba(17, 98, 212, 0.15) 0%, transparent 70%);
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .macos-shadow {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        kbd {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            padding: 2px 8px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.85em;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        .code-editor-line {
+            display: flex;
+            align-items: center;
+            line-height: 1.7;
+            font-size: 13px;
+        }
+        .line-number {
+            width: 40px;
+            text-align: right;
+            padding-right: 16px;
+            color: rgba(255, 255, 255, 0.2);
+            user-select: none;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        .cursor-blink {
+            animation: blink 1s infinite;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
 
-<div class="container">
-
-  <section class="hero">
-    <h1>Dikto</h1>
-    <p class="tagline">Voice-to-text for macOS. Records speech, transcribes locally. No cloud.</p>
-    <div class="badges">
-      <span class="badge">macOS 14+</span>
-      <span class="badge">Apple Silicon</span>
-      <span class="badge">MIT License</span>
-    </div>
-  </section>
-
-  <section class="install">
-    <h2>Install</h2>
-    <div class="install-options">
-
-      <div class="install-option">
-        <h3>One-liner <span class="label">Recommended</span></h3>
-        <p>Downloads, verifies, installs, and bypasses Gatekeeper automatically.</p>
-        <pre><code>curl -fsSL https://diktoapp.github.io/install.sh | bash</code></pre>
-      </div>
-
-      <div class="install-option">
-        <h3>Homebrew</h3>
-        <p>Install the GUI app via Homebrew Cask.</p>
-        <pre><code>brew install diktoapp/dikto/dikto --cask</code></pre>
-      </div>
-
-      <div class="install-option">
-        <h3>Download DMG</h3>
-        <p>Grab the latest DMG from GitHub Releases.</p>
-        <pre><code><a href="https://github.com/diktoapp/dikto/releases/latest">github.com/diktoapp/dikto/releases/latest</a></code></pre>
-      </div>
-
-      <div class="install-option">
-        <h3>CLI only</h3>
-        <p>Install just the command-line tool (builds from source).</p>
-        <pre><code>brew install diktoapp/dikto/dikto</code></pre>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="features">
-    <h2>Features</h2>
-    <div class="feature-grid">
-      <div class="feature">
-        <h3>Local transcription</h3>
-        <p>Whisper and NVIDIA Parakeet models run entirely on your Mac. Nothing leaves your machine.</p>
-      </div>
-      <div class="feature">
-        <h3>One shortcut</h3>
-        <p>Press Option+R to record. Text is transcribed, copied to clipboard, and pasted into the active app.</p>
-      </div>
-      <div class="feature">
-        <h3>Multiple models</h3>
-        <p>From 75 MB (Whisper Tiny, 99 languages) to 2.6 GB (Parakeet v3, 25 EU languages). Pick your tradeoff.</p>
-      </div>
-      <div class="feature">
-        <h3>Menu bar app</h3>
-        <p>Lives in the menu bar. SwiftUI native. Minimal footprint. Launches at login.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="privacy">
-    <h2>Your voice stays on your device</h2>
-    <p>Dikto never connects to a server. All speech processing happens locally using on-device ML models. No accounts, no telemetry, no cloud APIs.</p>
-  </section>
-
-  <section class="gatekeeper">
-    <details>
-      <summary>Gatekeeper: "Dikto can't be opened" (DMG downloads only)</summary>
-      <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 12px;">Dikto is ad-hoc signed but not Apple-notarized. If you download the DMG directly, macOS may block the app. The Homebrew and install-script methods bypass this automatically. For DMG installs, use one of these options:</p>
-      <ol>
-        <li><strong>Right-click > Open:</strong> Right-click (or Control-click) Dikto.app, choose "Open", then click "Open" in the dialog.</li>
-        <li><strong>Terminal:</strong> Run <code>xattr -cr /Applications/Dikto.app</code> then open the app normally.</li>
-        <li><strong>System Settings:</strong> Go to System Settings > Privacy & Security, scroll down, and click "Open Anyway" next to the Dikto message.</li>
-      </ol>
-    </details>
-  </section>
-
-  <footer class="footer">
-    <a href="https://github.com/diktoapp/dikto">GitHub</a> &middot; MIT License
-  </footer>
-
+<!-- Header -->
+<header class="fixed top-0 w-full z-50 glass">
+<div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<img src="dikto-icon.png" alt="Dikto" class="w-8 h-8 rounded-lg">
+<span class="text-xl font-bold tracking-tight">Dikto</span>
 </div>
+<nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-400">
+<a class="hover:text-primary transition-colors" href="#features">Features</a>
+<a class="hover:text-primary transition-colors" href="#specs">Specs</a>
+<a class="hover:text-primary transition-colors" href="#install">Install</a>
+<a class="flex items-center space-x-2 hover:text-primary transition-colors" href="https://github.com/diktoapp/dikto">
+<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+<span>GitHub</span>
+</a>
+</nav>
+<div class="flex items-center">
+<span id="version-badge" class="text-xs bg-primary/20 text-primary px-2 py-1 rounded border border-primary/30 font-mono">v1.2.1</span>
+</div>
+</div>
+</header>
+
+<main class="pt-32 pb-20 hero-gradient">
+
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto px-6 text-center">
+<h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+Privacy-first dictation <br/>
+<span class="text-primary">for macOS</span>
+</h1>
+<p class="max-w-2xl mx-auto text-xl text-slate-400 mb-4 leading-relaxed">
+Experience lightning-fast, offline on-device transcription.
+Powered by Whisper &amp; Parakeet, built for anyone who values their privacy.
+No cloud, no latency, no subscriptions.
+</p>
+<p class="text-slate-500 text-sm mb-10">
+Press <kbd>Option</kbd> + <kbd>Space</kbd> to start dictating — fully customizable
+</p>
+<div class="flex items-center justify-center mb-6">
+<div class="code-block flex items-center px-4 py-4 rounded-xl font-mono text-sm text-slate-300 overflow-x-auto whitespace-nowrap">
+<span class="text-primary mr-3 shrink-0">$</span>
+<span>brew install diktoapp/dikto/dikto --cask</span>
+<button onclick="navigator.clipboard.writeText('brew install diktoapp/dikto/dikto --cask')" class="ml-4 text-slate-500 hover:text-white transition-colors shrink-0" title="Copy to clipboard">
+<span class="material-icons text-sm">content_copy</span>
+</button>
+</div>
+</div>
+<p class="text-slate-500 text-sm mb-16">
+Requires macOS 14.0 or later (Apple Silicon recommended)
+</p>
+
+<!-- Visual Demo Mockup — CSS Code Editor -->
+<div class="relative max-w-5xl mx-auto">
+<div class="bg-slate-900 rounded-xl overflow-hidden macos-shadow border border-white/5">
+<!-- macOS title bar -->
+<div class="h-8 bg-slate-800/50 flex items-center px-4 space-x-1.5">
+<div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+<span class="ml-4 text-[11px] text-slate-500 font-mono">ContentView.swift</span>
+</div>
+<!-- Code editor content -->
+<div class="aspect-video relative overflow-hidden bg-[#1e1e1e] p-4 md:p-6 text-left font-mono">
+<div class="code-editor-line">
+<span class="line-number">1</span>
+<span class="text-purple-400">import</span> <span class="text-green-300 ml-2">SwiftUI</span>
+</div>
+<div class="code-editor-line">
+<span class="line-number">2</span>
+</div>
+<div class="code-editor-line">
+<span class="line-number">3</span>
+<span class="text-purple-400">struct</span> <span class="text-green-300 ml-2">ContentView</span><span class="text-slate-400">:</span> <span class="text-green-300 ml-1">View</span> <span class="text-slate-400">{</span>
+</div>
+<div class="code-editor-line">
+<span class="line-number">4</span>
+<span class="ml-8 text-purple-400">@StateObject</span> <span class="text-purple-400 ml-1">private</span> <span class="text-purple-400 ml-1">var</span> <span class="text-slate-200 ml-1">engine</span> <span class="text-slate-400">=</span> <span class="text-green-300 ml-1">TranscriptionEngine</span><span class="text-slate-400">()</span>
+</div>
+<div class="code-editor-line">
+<span class="line-number">5</span>
+<span class="ml-8 text-purple-400">@State</span> <span class="text-purple-400 ml-1">private</span> <span class="text-purple-400 ml-1">var</span> <span class="text-slate-200 ml-1">isRecording</span> <span class="text-slate-400">=</span> <span class="text-orange-400 ml-1">false</span>
+</div>
+<div class="code-editor-line">
+<span class="line-number">6</span>
+</div>
+<div class="code-editor-line">
+<span class="line-number">7</span>
+<span class="ml-8 text-purple-400">var</span> <span class="text-slate-200 ml-1">body</span><span class="text-slate-400">:</span> <span class="text-purple-400 ml-1">some</span> <span class="text-green-300 ml-1">View</span> <span class="text-slate-400">{</span>
+</div>
+<div class="code-editor-line">
+<span class="line-number">8</span>
+<span class="ml-16 text-green-300">VStack</span><span class="text-slate-400">(</span><span class="text-slate-200">spacing</span><span class="text-slate-400">:</span> <span class="text-orange-400 ml-1">16</span><span class="text-slate-400">)</span> <span class="text-slate-400">{</span>
+</div>
+<div class="code-editor-line">
+<span class="line-number">9</span>
+<span class="ml-24 text-green-300">WaveformView</span><span class="text-slate-400">(</span><span class="text-slate-200">amplitude</span><span class="text-slate-400">:</span> <span class="text-slate-200 ml-1">engine</span><span class="text-slate-400">.</span><span class="text-slate-200">level</span><span class="text-slate-400">)</span>
+</div>
+<div class="code-editor-line">
+<span class="line-number">10</span>
+<span class="ml-24 text-green-300">Text</span><span class="text-slate-400">(</span><span class="text-slate-200">engine</span><span class="text-slate-400">.</span><span class="text-slate-200">transcript</span><span class="text-slate-400">)</span>
+</div>
+<div class="code-editor-line">
+<span class="line-number">11</span>
+<span class="ml-32 text-slate-400">.</span><span class="text-blue-300">font</span><span class="text-slate-400">(.</span><span class="text-blue-300">body</span><span class="text-slate-400">)</span>
+</div>
+<div class="code-editor-line">
+<span class="line-number">12</span>
+<span class="ml-32 text-slate-400">.</span><span class="text-blue-300">foregroundStyle</span><span class="text-slate-400">(.</span><span class="text-blue-300">secondary</span><span class="text-slate-400">)</span>
+</div>
+<div class="code-editor-line">
+<span class="line-number">13</span>
+<span class="ml-16 text-slate-400">}</span>
+</div>
+<div class="code-editor-line">
+<span class="line-number">14</span>
+<span class="ml-8 text-slate-400">}</span>
+</div>
+<div class="code-editor-line">
+<span class="line-number">15</span>
+<span class="text-slate-400">}</span><span class="cursor-blink text-slate-400">|</span>
+</div>
+
+<!-- Dikto Overlay Mockup — matches RecordingOverlayView -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-14 bg-white/20 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl flex items-center px-5 gap-3">
+<div class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse shrink-0"></div>
+<div class="flex flex-col min-w-0">
+<span class="text-[10px] text-slate-400">Listening...</span>
+<span class="text-sm text-slate-200">Speak now...</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Features Grid -->
+<section class="max-w-7xl mx-auto px-6 mt-32 scroll-mt-24" id="features">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="p-8 rounded-2xl bg-white/5 border border-white/5 hover:border-primary/30 transition-all group">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-icons">security</span>
+</div>
+<h3 class="text-xl font-bold mb-3">100% Local</h3>
+<p class="text-slate-400 text-sm leading-relaxed">
+Transcriptions are processed entirely on your machine. No data ever leaves your hardware.
+</p>
+</div>
+<div class="p-8 rounded-2xl bg-white/5 border border-white/5 hover:border-primary/30 transition-all group">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-icons">translate</span>
+</div>
+<h3 class="text-xl font-bold mb-3">99+ Languages</h3>
+<p class="text-slate-400 text-sm leading-relaxed">
+Support for multilingual transcription and translation via OpenAI's Whisper and NVIDIA Parakeet.
+</p>
+</div>
+<div class="p-8 rounded-2xl bg-white/5 border border-white/5 hover:border-primary/30 transition-all group">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-icons">keyboard</span>
+</div>
+<h3 class="text-xl font-bold mb-3">Your Shortcut, Your Way</h3>
+<p class="text-slate-400 text-sm leading-relaxed">
+Customize the global hotkey to any key combo. Choose between hold-to-record or toggle mode.
+</p>
+</div>
+<div class="p-8 rounded-2xl bg-white/5 border border-white/5 hover:border-primary/30 transition-all group">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-icons">code</span>
+</div>
+<h3 class="text-xl font-bold mb-3">Open Source</h3>
+<p class="text-slate-400 text-sm leading-relaxed">
+MIT licensed. Audit the code, contribute, or build your own version. Privacy is transparency.
+</p>
+</div>
+</div>
+</section>
+
+<!-- Works Everywhere -->
+<section class="max-w-7xl mx-auto px-6 mt-32 text-center">
+<h2 class="text-4xl font-bold mb-4">Dictate into any app</h2>
+<p class="text-slate-400 mb-12 max-w-xl mx-auto">
+Dikto works system-wide. Press your shortcut in any text field and start talking.
+</p>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-4xl mx-auto">
+<div class="p-6 rounded-2xl bg-white/5 border border-white/5 flex flex-col items-center gap-3">
+<span class="material-icons text-3xl text-slate-300">code</span>
+<span class="text-sm text-slate-400">Code Editors</span>
+</div>
+<div class="p-6 rounded-2xl bg-white/5 border border-white/5 flex flex-col items-center gap-3">
+<span class="material-icons text-3xl text-slate-300">email</span>
+<span class="text-sm text-slate-400">Email</span>
+</div>
+<div class="p-6 rounded-2xl bg-white/5 border border-white/5 flex flex-col items-center gap-3">
+<span class="material-icons text-3xl text-slate-300">sticky_note_2</span>
+<span class="text-sm text-slate-400">Notes</span>
+</div>
+<div class="p-6 rounded-2xl bg-white/5 border border-white/5 flex flex-col items-center gap-3">
+<span class="material-icons text-3xl text-slate-300">description</span>
+<span class="text-sm text-slate-400">Documents</span>
+</div>
+<div class="p-6 rounded-2xl bg-white/5 border border-white/5 flex flex-col items-center gap-3">
+<span class="material-icons text-3xl text-slate-300">chat</span>
+<span class="text-sm text-slate-400">Messages</span>
+</div>
+<div class="p-6 rounded-2xl bg-white/5 border border-white/5 flex flex-col items-center gap-3">
+<span class="material-icons text-3xl text-slate-300">language</span>
+<span class="text-sm text-slate-400">Browsers</span>
+</div>
+</div>
+</section>
+
+<!-- Tech Specs Section -->
+<section class="max-w-7xl mx-auto px-6 mt-32 scroll-mt-24" id="specs">
+<div class="bg-white/5 rounded-3xl p-8 md:p-12 border border-white/5">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-12">
+<div class="lg:w-1/2">
+<h2 class="text-3xl font-bold mb-6">Built for Performance</h2>
+<p class="text-slate-400 mb-8">
+Dikto is engineered using a hybrid architecture for maximum efficiency and native feel.
+</p>
+<div class="space-y-4">
+<div class="flex items-center space-x-4 p-4 rounded-xl bg-background-dark/50 border border-white/5">
+<div class="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-500">
+<span class="material-icons">bolt</span>
+</div>
+<div>
+<h4 class="font-semibold text-sm">Native Backend</h4>
+<p class="text-xs text-slate-500">Handles heavy ML inference via whisper.cpp &amp; sherpa-onnx</p>
+</div>
+</div>
+<div class="flex items-center space-x-4 p-4 rounded-xl bg-background-dark/50 border border-white/5">
+<div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500">
+<span class="material-icons">laptop_mac</span>
+</div>
+<div>
+<h4 class="font-semibold text-sm">SwiftUI Frontend</h4>
+<p class="text-xs text-slate-500">Native macOS experience with system blurs</p>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:w-1/2 bg-background-dark rounded-2xl border border-white/10 overflow-hidden">
+<div class="p-4 border-b border-white/10 bg-white/5 flex items-center justify-between">
+<span class="text-xs font-mono text-slate-400">Available Models</span>
+<span class="text-[10px] text-primary font-bold uppercase tracking-wider">On-device Ready</span>
+</div>
+<div class="p-4 space-y-1">
+<div class="flex items-center justify-between text-sm py-2.5 border-b border-white/5 gap-2">
+<div class="min-w-0">
+<span class="text-slate-200 truncate">Parakeet TDT 0.6B v2</span>
+<span class="ml-2 text-[10px] bg-primary/20 text-primary px-1.5 py-0.5 rounded font-mono">default</span>
+</div>
+<div class="flex items-center gap-4 shrink-0">
+<span class="text-slate-500 text-xs">English</span>
+<span class="text-slate-500 font-mono text-xs w-16 text-right">2.5 GB</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-sm py-2.5 border-b border-white/5 gap-2">
+<span class="text-slate-300 min-w-0 truncate">Parakeet TDT 0.6B v3</span>
+<div class="flex items-center gap-4 shrink-0">
+<span class="text-slate-500 text-xs">25 EU languages</span>
+<span class="text-slate-500 font-mono text-xs w-16 text-right">2.6 GB</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-sm py-2.5 border-b border-white/5 gap-2">
+<span class="text-slate-300 min-w-0 truncate">Whisper Tiny</span>
+<div class="flex items-center gap-4 shrink-0">
+<span class="text-slate-500 text-xs">99 languages</span>
+<span class="text-slate-500 font-mono text-xs w-16 text-right">75 MB</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-sm py-2.5 border-b border-white/5 gap-2">
+<span class="text-slate-300 min-w-0 truncate">Whisper Small</span>
+<div class="flex items-center gap-4 shrink-0">
+<span class="text-slate-500 text-xs">Balanced</span>
+<span class="text-slate-500 font-mono text-xs w-16 text-right">460 MB</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-sm py-2.5 border-b border-white/5 gap-2">
+<span class="text-slate-300 min-w-0 truncate">Whisper Large v3 Turbo</span>
+<div class="flex items-center gap-4 shrink-0">
+<span class="text-slate-500 text-xs">Highest accuracy</span>
+<span class="text-slate-500 font-mono text-xs w-16 text-right">1.6 GB</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-sm py-2.5 gap-2">
+<span class="text-slate-300 min-w-0 truncate">Distil Whisper Large v3</span>
+<div class="flex items-center gap-4 shrink-0">
+<span class="text-slate-500 text-xs">6x faster</span>
+<span class="text-slate-500 font-mono text-xs w-16 text-right">1.5 GB</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Installation Section -->
+<section class="max-w-7xl mx-auto px-6 mt-32 text-center scroll-mt-24" id="install">
+<h2 class="text-4xl font-bold mb-12">Install via Terminal</h2>
+<div class="max-w-3xl mx-auto bg-slate-900 rounded-2xl overflow-hidden macos-shadow border border-white/10">
+<div class="bg-slate-800/50 px-4 py-2 flex items-center justify-between">
+<div class="flex space-x-1.5">
+<div class="w-3 h-3 rounded-full bg-red-500/30"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500/30"></div>
+<div class="w-3 h-3 rounded-full bg-green-500/30"></div>
+</div>
+<span class="text-[10px] font-mono text-slate-500">zsh &mdash; 80x24</span>
+</div>
+<div class="p-8 text-left font-mono text-sm space-y-4 overflow-x-auto">
+<div class="flex items-center group cursor-pointer whitespace-nowrap" onclick="navigator.clipboard.writeText('brew install diktoapp/dikto/dikto --cask')">
+<span class="text-primary mr-4 shrink-0">$</span>
+<code class="text-slate-300">brew install diktoapp/dikto/dikto --cask</code>
+<span class="material-icons text-xs ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-slate-500 shrink-0">content_copy</span>
+</div>
+<div class="flex items-center group cursor-pointer whitespace-nowrap" onclick="navigator.clipboard.writeText('curl -fsSL https://diktoapp.github.io/install.sh | bash')">
+<span class="text-primary mr-4 shrink-0">$</span>
+<code class="text-slate-300">curl -fsSL https://diktoapp.github.io/install.sh | bash</code>
+<span class="material-icons text-xs ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-slate-500 shrink-0">content_copy</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Gatekeeper Troubleshooting -->
+<section class="max-w-3xl mx-auto px-6 mt-24">
+<details class="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8">
+<summary class="cursor-pointer font-semibold text-lg flex items-center gap-3">
+<span class="material-icons text-yellow-500 text-xl">shield</span>
+Gatekeeper: "Dikto can't be opened" (DMG downloads only)
+</summary>
+<div class="mt-6">
+<p class="text-slate-400 text-sm mb-4">
+Dikto is ad-hoc signed but not Apple-notarized. If you download the DMG directly, macOS may block the app.
+The Homebrew and install-script methods bypass this automatically. For DMG installs, use one of these options:
+</p>
+<ol class="list-decimal list-inside space-y-3 text-sm text-slate-400">
+<li><strong class="text-slate-200">Right-click &gt; Open:</strong> Right-click (or Control-click) Dikto.app, choose "Open", then click "Open" in the dialog.</li>
+<li><strong class="text-slate-200">Terminal:</strong> Run <code class="text-green-400 bg-white/5 px-1.5 py-0.5 rounded text-xs">xattr -cr /Applications/Dikto.app</code> then open the app normally.</li>
+<li><strong class="text-slate-200">System Settings:</strong> Go to System Settings &gt; Privacy &amp; Security, scroll down, and click "Open Anyway" next to the Dikto message.</li>
+</ol>
+</div>
+</details>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer class="border-t border-white/5 py-16 bg-background-dark">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col items-center md:items-start">
+<div class="flex items-center space-x-2 mb-4">
+<img src="dikto-icon.png" alt="Dikto" class="w-6 h-6 rounded">
+<span class="font-bold">Dikto</span>
+</div>
+<p class="text-sm text-slate-500">&copy; 2026 Dikto. Built for the macOS community.</p>
+</div>
+<div class="flex items-center space-x-8 text-sm text-slate-400">
+<a class="hover:text-white transition-colors" href="https://github.com/diktoapp/dikto">GitHub</a>
+<span class="px-3 py-1 bg-white/5 rounded-full border border-white/10 text-[10px] uppercase font-bold text-slate-500">MIT License</span>
+</div>
+</div>
+</div>
+</footer>
+
+<script>
+// Fetch latest release info from GitHub API
+fetch('https://api.github.com/repos/diktoapp/dikto/releases/latest')
+  .then(r => r.json())
+  .then(data => {
+    if (data.tag_name) {
+      const badge = document.getElementById('version-badge');
+      if (badge) badge.textContent = data.tag_name;
+    }
+  })
+  .catch(() => {});
+</script>
 
 </body>
 </html>
